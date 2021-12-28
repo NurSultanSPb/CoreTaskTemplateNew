@@ -51,7 +51,6 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("User с именем – " + name + " добавлен в базу данных");
 
     }
 
