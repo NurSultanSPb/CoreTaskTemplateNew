@@ -74,8 +74,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
         List<User> result = new ArrayList<>();
         try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("select * from User");
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from User")) {
             while (resultSet.next()) {
                 result.add(new User(resultSet.getString("name"),
                         resultSet.getString("lastName"), resultSet.getByte("age")));
@@ -90,12 +90,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
 
-        try (Connection connection = Util.getConnection()) {
-            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet resultSet = statement.executeQuery("select * from User");
-            while (resultSet.next()) {
-                resultSet.deleteRow();
-            }
+        try (Connection connection = Util.getConnection();
+        Statement statement = connection.createStatement()) {
+            statement.executeUpdate("truncate table User");
         } catch (SQLException e) {
             e.printStackTrace();
         }
