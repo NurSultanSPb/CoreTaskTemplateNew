@@ -10,8 +10,13 @@ public class Util {
     static String password = "root";
     static String url = "jdbc:mysql://localhost:3306/my_database";
 
-    public static Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(url, userName, password);
+    public static Connection getConnection() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(url, userName, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 }
